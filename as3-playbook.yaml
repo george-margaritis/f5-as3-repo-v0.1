@@ -1,0 +1,26 @@
+---
+- name: DEPLOY AS3 DECLARATION
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    uri_method: POST
+  
+  vars_files:
+    - ../creds/bigip_creds.yaml
+  
+  tasks:
+
+
+  - name: deploy f5 as3 declaration with ansible 
+    uri:
+      url: https://3.9.107.98/mgmt/shared/appsvcs/declare/
+      user: "{{bigip_user}}"
+      password: "{{bigip_pass}}"
+      method: "{{uri_method}}"
+      body: "{{ lookup('file','as3-body-ansible.json') }}"
+      force_basic_auth: yes
+      status_code: 200
+      body_format: json
+      validate_certs: no
